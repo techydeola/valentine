@@ -1,0 +1,1233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>💌 For You, My Love</title>
+<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Space+Mono:wght@400;700&family=Cormorant+Garamond:ital,wght@0,300;0,600;1,300;1,600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --rose:#e8334a;--blush:#ffd6dc;--cream:#fff8f0;
+  --deep:#1a0a0f;--gold:#f2b05e;--darkbg:#100508;
+}
+html,body{overflow-x:hidden;height:100%;}
+body{font-family:'Cormorant Garamond',Georgia,serif;background:var(--cream);min-height:100vh;}
+
+/* ══════════ FLOATING HEARTS ══════════ */
+.hearts-bg{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden;}
+.hf{position:absolute;opacity:.12;animation:hfUp linear infinite;user-select:none;}
+@keyframes hfUp{
+  0%{transform:translateY(110vh) rotate(0deg);opacity:0;}
+  10%{opacity:.12;}90%{opacity:.12;}
+  100%{transform:translateY(-10vh) rotate(360deg);opacity:0;}
+}
+
+/* ══════════ PAGES ══════════ */
+.page{position:fixed;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;transition:opacity .7s,transform .7s;z-index:20;}
+.page.hidden{opacity:0;pointer-events:none;transform:scale(.96);}
+#p1{z-index:30;}
+
+/* ══════════════════════════════════════
+   PAGE 1 — INTRO
+══════════════════════════════════════ */
+#p1{background:radial-gradient(ellipse at 60% 40%,#ffd6dc,#fff0f3 45%,#fff8f0);padding:2rem;text-align:center;z-index:40;}
+.env{font-size:7rem;display:inline-block;cursor:pointer;animation:envP 2s ease-in-out infinite;filter:drop-shadow(0 8px 28px rgba(232,51,74,.35));transition:transform .2s;margin-bottom:1.5rem;}
+.env:hover{transform:scale(1.15) rotate(-6deg);}
+@keyframes envP{0%,100%{transform:scale(1)}50%{transform:scale(1.08)}}
+.p1h{font-family:'Dancing Script',cursive;font-size:clamp(2rem,6vw,3.8rem);color:var(--rose);line-height:1.2;margin-bottom:.8rem;opacity:0;animation:fadeUp 1s .5s forwards;}
+.p1s{font-style:italic;color:#7a4a53;font-size:clamp(1rem,2.5vw,1.25rem);margin-bottom:2.2rem;opacity:0;animation:fadeUp 1s 1s forwards;}
+.open-btn{background:var(--rose);color:#fff;border:none;padding:1rem 2.8rem;font-family:'Cormorant Garamond',serif;font-size:1.15rem;letter-spacing:.06em;border-radius:50px;cursor:pointer;box-shadow:0 6px 24px rgba(232,51,74,.38);transition:all .25s;opacity:0;animation:fadeUp 1s 1.5s forwards;-webkit-tap-highlight-color:transparent;touch-action:manipulation;}
+.open-btn:hover{background:#c8223a;transform:translateY(-3px);box-shadow:0 10px 32px rgba(232,51,74,.5);}
+@keyframes fadeUp{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:translateY(0)}}
+
+/* ══════════════════════════════════════
+   PAGE 2 — THE QUESTION
+══════════════════════════════════════ */
+#p2{background:radial-gradient(ellipse at 40% 60%,#ffeef1,#fff5f0 50%,#fff8f0);padding:1.2rem;text-align:center;overflow:hidden;}
+
+/* shake classes */
+.shk-s{animation:shk .4s ease!important;}
+.shk-m{animation:shk .22s ease 3!important;}
+.shk-l{animation:shk .15s ease 6!important;}
+@keyframes shk{0%,100%{transform:translate(0,0)}20%{transform:translate(-9px,5px)}40%{transform:translate(9px,-5px)}60%{transform:translate(-6px,6px)}80%{transform:translate(6px,-4px)}}
+.rainbow{animation:rb .45s linear infinite!important;color:unset!important;}
+@keyframes rb{0%{color:#e8334a}20%{color:#ff8c00}40%{color:#ffd700}60%{color:#32cd32}80%{color:#1e90ff}100%{color:#9400d3}}
+#p2.red-tint::after{content:'';position:fixed;inset:0;background:rgba(232,51,74,.13);pointer-events:none;z-index:9;animation:rtP .7s ease infinite alternate;}
+@keyframes rtP{from{opacity:0}to{opacity:1}}
+
+.bigq{font-family:'Dancing Script',cursive;font-size:clamp(2rem,7vw,4.2rem);color:var(--deep);line-height:1.25;margin-bottom:.35rem;transition:font-size .3s;}
+.bigq span{color:var(--rose);}
+.qheart{font-size:2.8rem;display:block;margin:.3rem auto .7rem;animation:hb 1.4s ease-in-out infinite;}
+@keyframes hb{0%,100%{transform:scale(1)}14%{transform:scale(1.28)}28%{transform:scale(1.1)}42%{transform:scale(1.22)}}
+
+/* meme box */
+.meme-box{background:#fff;border-radius:18px;padding:.8rem 1rem;margin:.4rem auto 1.1rem;max-width:340px;width:92%;box-shadow:0 6px 24px rgba(0,0,0,.1);border:2.5px solid var(--blush);display:flex;flex-direction:column;align-items:center;gap:.5rem;min-height:200px;justify-content:center;transition:border-color .35s;}
+.meme-box.flash{animation:mbF .3s ease;}
+@keyframes mbF{0%,100%{border-color:var(--blush)}50%{border-color:var(--rose);box-shadow:0 0 22px rgba(232,51,74,.35);}}
+
+/* GIF container — uses iframe trick for reliability */
+.gif-wrap{width:220px;height:150px;border-radius:12px;overflow:hidden;background:#f0e0e5;flex-shrink:0;display:flex;align-items:center;justify-content:center;}
+.gif-wrap img{width:100%;height:100%;object-fit:cover;display:block;}
+.meme-txt{font-family:'Space Mono',monospace;font-size:.73rem;color:#444;text-align:center;line-height:1.6;padding:0 .3rem;}
+
+/* buttons */
+.yes-row{display:flex;align-items:center;justify-content:center;margin-top:.6rem;}
+.btn-yes{background:var(--rose);color:#fff;border:none;padding:1rem 2.6rem;font-family:'Cormorant Garamond',serif;font-size:1.25rem;font-style:italic;font-weight:600;letter-spacing:.04em;border-radius:50px;cursor:pointer;box-shadow:0 6px 22px rgba(232,51,74,.38);transition:all .25s;z-index:20;-webkit-tap-highlight-color:transparent;touch-action:manipulation;user-select:none;}
+.btn-yes:hover,.btn-yes:active{transform:scale(1.12);background:#c8223a;box-shadow:0 10px 32px rgba(232,51,74,.5);}
+.btn-no{
+  background:#888;color:#fff;border:none;
+  font-family:'Space Mono',monospace;font-size:1rem;
+  border-radius:50px;cursor:pointer;
+  white-space:nowrap;
+  box-shadow:0 4px 16px rgba(0,0,0,.22);
+  padding:.85rem 2rem;
+  transition:background .2s,opacity .4s,font-size .3s;
+  -webkit-tap-highlight-color:transparent;
+  -webkit-touch-callout:none;touch-action:manipulation;user-select:none;
+  /* starts in normal flow, becomes fixed after first click */
+  position:relative;
+  display:block;
+  margin-top:.5rem;
+}
+.btn-no.flying{
+  position:fixed;
+  z-index:50;
+}
+.btn-no:hover{background:#555;}
+
+/* chaos words */
+.cw{position:fixed;pointer-events:none;z-index:800;font-family:'Space Mono',monospace;font-weight:700;animation:cwF linear forwards;opacity:0;}
+@keyframes cwF{0%{opacity:0;transform:translateY(0) rotate(-8deg) scale(.7);}15%{opacity:1;}85%{opacity:1;}100%{opacity:0;transform:translateY(-110px) rotate(18deg) scale(1.2);}}
+
+/* cursor trail */
+.cur{position:fixed;pointer-events:none;z-index:9000;font-size:.9rem;opacity:.9;animation:curF .7s ease forwards;}
+@keyframes curF{0%{opacity:.9;transform:scale(1) translateY(0);}100%{opacity:0;transform:scale(.1) translateY(-50px);}}
+
+/* ══════════════════════════════════════
+   PAGE 3 — SLIDESHOW
+══════════════════════════════════════ */
+#p3{background:var(--darkbg);overflow:hidden;padding:0;}
+
+/* Slide container */
+.slideshow{position:relative;width:100%;height:100%;display:flex;align-items:center;justify-content:center;}
+
+/* Individual slide */
+.slide{
+  position:absolute;inset:0;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  opacity:0;transition:opacity 1.2s ease, transform 1.2s ease;
+  transform:scale(1.03);
+  pointer-events:none;
+}
+.slide.active{opacity:1;transform:scale(1);pointer-events:all;}
+.slide.prev{opacity:0;transform:scale(.97);}
+
+/* Full bleed photo */
+.slide-img-wrap{
+  position:absolute;inset:0;z-index:0;
+}
+.slide-img-wrap img{
+  width:100%;height:100%;object-fit:cover;display:block;
+  filter:brightness(.55) saturate(1.1);
+  transition:transform 8s ease;
+}
+.slide.active .slide-img-wrap img{transform:scale(1.07);}
+
+/* Gradient overlay */
+.slide-overlay{
+  position:absolute;inset:0;z-index:1;
+  background:linear-gradient(to top, rgba(10,2,6,.9) 0%, rgba(10,2,6,.2) 50%, rgba(10,2,6,.1) 100%);
+}
+
+/* Caption */
+.slide-caption{
+  position:relative;z-index:2;
+  text-align:center;padding:0 1.5rem;
+  margin-top:auto;padding-bottom:4.5rem;
+  width:100%;
+}
+.slide-num{
+  font-family:'Space Mono',monospace;font-size:.7rem;
+  letter-spacing:.18em;color:rgba(255,210,180,.5);
+  text-transform:uppercase;margin-bottom:.7rem;display:block;
+}
+.slide-title{
+  font-family:'Dancing Script',cursive;
+  font-size:clamp(1.8rem,6vw,3.2rem);
+  color:#fff;line-height:1.2;
+  text-shadow:0 2px 24px rgba(0,0,0,.6);
+  margin-bottom:.5rem;
+}
+.slide-subtitle{
+  font-family:'Cormorant Garamond',serif;
+  font-style:italic;font-size:clamp(.95rem,2.5vw,1.25rem);
+  color:rgba(255,220,200,.75);
+  text-shadow:0 2px 12px rgba(0,0,0,.5);
+}
+
+/* Top title */
+.slideshow-header{
+  position:absolute;top:0;left:0;right:0;z-index:10;
+  text-align:center;padding:1.5rem 1rem .5rem;
+  background:linear-gradient(to bottom,rgba(10,2,6,.75),transparent);
+}
+.slideshow-header h1{
+  font-family:'Dancing Script',cursive;
+  font-size:clamp(1.6rem,5vw,2.8rem);
+  color:var(--gold);
+  text-shadow:0 0 30px rgba(242,176,94,.5);
+  animation:glow 2.5s ease-in-out infinite;
+}
+@keyframes glow{0%,100%{text-shadow:0 0 30px rgba(242,176,94,.45)}50%{text-shadow:0 0 70px rgba(242,176,94,.95),0 0 120px rgba(242,176,94,.3)}}
+
+/* Navigation dots */
+.slide-dots{
+  position:absolute;bottom:1.6rem;left:0;right:0;
+  display:flex;align-items:center;justify-content:center;gap:.5rem;z-index:10;
+}
+.dot{
+  width:7px;height:7px;border-radius:50%;
+  background:rgba(255,255,255,.3);border:none;cursor:pointer;
+  transition:all .3s;padding:0;
+}
+.dot.active{background:var(--gold);transform:scale(1.4);}
+
+/* Prev / Next arrows */
+.arrow{
+  position:absolute;top:50%;transform:translateY(-50%);
+  z-index:10;background:rgba(255,255,255,.1);border:1.5px solid rgba(255,255,255,.2);
+  color:#fff;width:42px;height:42px;border-radius:50%;cursor:pointer;
+  font-size:1.1rem;display:flex;align-items:center;justify-content:center;
+  transition:all .25s;backdrop-filter:blur(6px);
+}
+.arrow:hover{background:rgba(232,51,74,.5);border-color:var(--rose);}
+.arrow.left{left:1rem;}
+.arrow.right{right:1rem;}
+
+/* Heart rain on p3 */
+.hr{position:fixed;pointer-events:none;z-index:5;font-size:1.1rem;
+  animation:hrFall linear forwards;opacity:0;}
+@keyframes hrFall{0%{opacity:0;transform:translateY(-10px);}10%{opacity:.8;}90%{opacity:.6;}100%{opacity:0;transform:translateY(100vh) rotate(360deg);}}
+
+/* Final love slide */
+.love-final{
+  position:relative;z-index:2;text-align:center;
+  padding:1.5rem;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;height:100%;
+}
+.love-final .heart-big{font-size:5rem;animation:hb 1.6s ease-in-out infinite;margin-bottom:1rem;}
+.love-final h2{font-family:'Dancing Script',cursive;font-size:clamp(2rem,7vw,4rem);color:var(--gold);margin-bottom:.8rem;text-shadow:0 0 40px rgba(242,176,94,.5);}
+.love-final p{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(1.1rem,3vw,1.5rem);color:rgba(255,220,200,.85);line-height:1.8;max-width:460px;margin-bottom:1.2rem;}
+.love-final .sig{font-family:'Dancing Script',cursive;color:var(--gold);font-size:1.4rem;}
+
+/* confetti */
+.cfti{position:fixed;pointer-events:none;z-index:9999;opacity:0;border-radius:2px;animation:cfF linear forwards;}
+@keyframes cfF{0%{transform:translateY(-20px) rotate(0deg);opacity:1;}100%{transform:translateY(110vh) rotate(720deg);opacity:0;}}
+
+
+/* ══════════ MUSIC BAR ══════════ */
+.music-bar{
+  display:flex;align-items:center;gap:.6rem;
+  margin-top:.5rem;justify-content:center;
+  opacity:0;animation:fadeUp 1s 0.5s forwards;
+}
+.music-btn{
+  background:rgba(242,176,94,.15);border:1.5px solid rgba(242,176,94,.4);
+  color:var(--gold);width:32px;height:32px;border-radius:50%;
+  font-size:.8rem;cursor:pointer;display:flex;align-items:center;justify-content:center;
+  transition:all .25s;flex-shrink:0;padding:0;
+}
+.music-btn:hover{background:rgba(242,176,94,.3);}
+.music-info{display:flex;flex-direction:column;align-items:flex-start;gap:.2rem;}
+.music-title{
+  font-family:'Space Mono',monospace;font-size:.62rem;
+  color:rgba(242,176,94,.7);letter-spacing:.06em;white-space:nowrap;
+}
+/* animated sound wave bars */
+.music-wave{display:flex;align-items:flex-end;gap:2px;height:14px;}
+.music-wave span{
+  display:block;width:3px;background:var(--gold);border-radius:2px;
+  animation:waveBar .8s ease-in-out infinite;opacity:.7;
+}
+.music-wave span:nth-child(1){animation-delay:0s;   height:5px;}
+.music-wave span:nth-child(2){animation-delay:.15s; height:10px;}
+.music-wave span:nth-child(3){animation-delay:.3s;  height:14px;}
+.music-wave span:nth-child(4){animation-delay:.15s; height:9px;}
+.music-wave span:nth-child(5){animation-delay:.05s; height:6px;}
+@keyframes waveBar{
+  0%,100%{transform:scaleY(.4);}50%{transform:scaleY(1);}
+}
+.music-wave.paused span{animation-play-state:paused;transform:scaleY(.4);}
+
+
+/* ── intro photo (shown before first No) ── */
+.intro-photo-wrap{
+  display:flex;flex-direction:column;align-items:center;
+  gap:.5rem;margin:.3rem auto 1rem;
+  animation:fadeUp .6s ease forwards;
+}
+.intro-photo{
+  width:190px;height:190px;object-fit:cover;
+  border-radius:50%;
+  border:4px solid var(--blush);
+  box-shadow:0 6px 28px rgba(232,51,74,.25);
+  transition:transform .3s;
+}
+.intro-photo:hover{transform:scale(1.04);}
+.intro-photo-caption{
+  font-family:'Dancing Script',cursive;
+  font-size:1.05rem;color:#b05068;
+  font-style:italic;
+}
+
+
+
+.yes-row{
+  flex-direction:column;gap:.5rem;
+  align-items:center;
+  position:relative;
+}
+
+
+
+/* ══════════════════════════════════
+   VIDEO SLIDES
+══════════════════════════════════ */
+.slide-video-wrap{
+  position:absolute;inset:0;z-index:0;
+  background:#000;
+}
+.slide-video-wrap video{
+  width:100%;height:100%;object-fit:cover;display:block;
+}
+
+/* Progress bar */
+.progress-bar-wrap{
+  position:absolute;bottom:0;left:0;right:0;
+  height:3px;background:rgba(255,255,255,.15);z-index:12;
+}
+.progress-bar{
+  height:100%;width:0%;
+  background:var(--gold);
+  transition:width .1s linear;
+}
+
+/* Slide counter + mute */
+.slide-controls{
+  position:absolute;top:0;right:0;z-index:12;
+  display:flex;align-items:center;gap:.5rem;
+  padding:.8rem 1rem;
+}
+.slide-counter{
+  font-family:'Space Mono',monospace;font-size:.65rem;
+  color:rgba(255,255,255,.5);letter-spacing:.1em;
+}
+.vid-mute-btn{
+  background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);
+  color:#fff;width:28px;height:28px;border-radius:50%;
+  font-size:.75rem;cursor:pointer;display:flex;
+  align-items:center;justify-content:center;
+  padding:0;transition:all .2s;backdrop-filter:blur(4px);
+}
+.vid-mute-btn:hover,.vid-mute-btn:active{background:rgba(255,255,255,.25);}
+.vid-mute-btn.hidden{opacity:0;pointer-events:none;}
+
+/* video-type slide — no Ken Burns zoom */
+.slide.is-video .slide-img-wrap img { display:none; }
+
+/* Dots — max visible width with scroll on 20+ items */
+.slide-dots{
+  position:absolute;bottom:1.2rem;left:0;right:0;
+  display:flex;align-items:center;justify-content:center;
+  gap:.35rem;z-index:10;
+  overflow-x:auto;padding:0 1rem;
+  scrollbar-width:none;
+}
+.slide-dots::-webkit-scrollbar{display:none;}
+.dot{
+  flex-shrink:0;
+  width:6px;height:6px;border-radius:50%;
+  background:rgba(255,255,255,.3);border:none;cursor:pointer;
+  transition:all .3s;padding:0;
+}
+.dot.active{background:var(--gold);transform:scale(1.5);}
+
+/* ── Final slide WhatsApp button ── */
+.btn-wa-final{
+  display:inline-flex;align-items:center;gap:.7rem;
+  margin-top:1.4rem;
+  background:transparent;
+  border:1.5px solid rgba(242,176,94,.5);
+  color:var(--gold);
+  padding:.85rem 2rem;
+  border-radius:50px;
+  text-decoration:none;
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.05rem;font-style:italic;
+  letter-spacing:.04em;
+  cursor:pointer;
+  transition:all .3s;
+  backdrop-filter:blur(8px);
+  background:rgba(242,176,94,.08);
+  -webkit-tap-highlight-color:transparent;
+  touch-action:manipulation;
+  user-select:none;
+  animation:fadeUp .8s 0.4s both;
+}
+.btn-wa-final:hover, .btn-wa-final:active{
+  background:rgba(242,176,94,.18);
+  border-color:var(--gold);
+  transform:translateY(-3px);
+  box-shadow:0 8px 28px rgba(242,176,94,.25);
+}
+.wa-icon{font-style:normal;font-size:1.15rem;}
+.wa-label{white-space:nowrap;}
+.wa-arrow{
+  font-style:normal;opacity:.7;
+  transition:transform .3s;
+  display:inline-block;
+}
+.btn-wa-final:hover .wa-arrow,
+.btn-wa-final:active .wa-arrow{transform:translateX(4px);opacity:1;}
+
+/* ══════════════════════════════════
+   MOBILE — full overhaul
+══════════════════════════════════ */
+@media(max-width:600px){
+  /* Page 2 — tighter so everything fits without scrolling */
+  #p2{padding:.6rem .8rem;justify-content:flex-start;padding-top:max(1.2rem, env(safe-area-inset-top));}
+  .bigq{font-size:clamp(1.6rem,8vw,2.4rem);margin-bottom:.15rem;}
+  .qheart{font-size:2rem;margin:.15rem auto .4rem;}
+
+  /* Intro photo — smaller circle */
+  .intro-photo{width:140px;height:140px;}
+  .intro-photo-caption{font-size:.9rem;}
+  .intro-photo-wrap{margin:.2rem auto .6rem;gap:.3rem;}
+
+  /* Meme box — compact */
+  .meme-box{max-width:100%;width:96%;min-height:160px;padding:.6rem .7rem;margin:.2rem auto .7rem;}
+  .gif-wrap{width:160px;height:110px;}
+  .meme-txt{font-size:.68rem;}
+
+  /* Buttons — full width, easy tap targets */
+  .yes-row{width:100%;padding:0 1rem;}
+  .btn-yes{width:100%;font-size:1.1rem;padding:.9rem 1rem;}
+
+  /* Slideshow arrows — hide on mobile (swipe instead) */
+  .arrow{display:none;}
+
+  /* Dots — bigger tap targets */
+  .dot{width:9px;height:9px;}
+
+  /* Love final slide — tighter */
+  .love-final .heart-big{font-size:3.5rem;margin-bottom:.6rem;}
+  .love-final p{font-size:clamp(1rem,4vw,1.2rem);}
+
+  /* Slide caption — more breathing room above dots */
+  .slide-caption{padding-bottom:3.5rem;}
+
+  /* No button — respect safe area bottom */
+}
+
+/* iPhone notch / safe areas */
+@supports(padding: max(0px)){
+
+  #p2{
+    padding-bottom: max(.6rem, env(safe-area-inset-bottom));
+  }
+}
+</style>
+</head>
+<body>
+
+<div class="hearts-bg" id="heartsBg"></div>
+
+<!-- ══════════ PAGE 1 ══════════ -->
+<div class="page" id="p1">
+  <div class="env" id="envIcon" onclick="openEnv()">💌</div>
+  <h1 class="p1h">You've got a very<br>special message…</h1>
+  <p class="p1s">Tap to open. Choose wisely 😏</p>
+  <button class="open-btn" onclick="openEnv()">Open the letter 💖</button>
+</div>
+
+<!-- ══════════ PAGE 2 ══════════ -->
+<div class="page hidden" id="p2">
+  <h2 class="bigq" id="bigQ">Will you be my <span>Valentine?</span></h2>
+  <span class="qheart">💕</span>
+
+  <!-- INITIAL PHOTO shown before any No click -->
+  <div class="intro-photo-wrap" id="introPhotoWrap">
+    <!--
+      ════════════════════════════════════════════
+      Replace src="" below with a cute photo of
+      you two, or just you making a sweet/pleading
+      face! e.g. src="cute.jpg"
+      ════════════════════════════════════════════
+    -->
+    <img class="intro-photo" id="introPhoto"
+         src="us.JPG"
+         alt="a sweet photo">
+    <p class="intro-photo-caption">Look at this face, you literally cannot say No… 🥺</p>
+  </div>
+
+  <!-- MEME BOX — hidden until first No click -->
+  <div class="meme-box" id="memeBox" style="display:none;">
+    <div class="gif-wrap">
+      <img id="memeGif" src="" alt="reaction gif" crossorigin="anonymous">
+    </div>
+    <p class="meme-txt" id="memeTxt"></p>
+  </div>
+
+  <div class="yes-row">
+    <button class="btn-yes" id="btnYes" onclick="sayYes()">Yes, obviously 🥰</button>
+    <button class="btn-no" id="btnNo" onclick="noClicked()">No</button>
+  </div>
+</div>
+
+<!-- ══════════ PAGE 3 ══════════ -->
+<div class="page hidden" id="p3">
+  <div class="slideshow" id="slideshow">
+
+    <!-- header -->
+    <div class="slideshow-header">
+      <h1>Our Story 💛</h1>
+      <div class="music-bar" id="musicBar">
+        <button class="music-btn" id="musicBtn" onclick="toggleMusic()">&#9646;&#9646;</button>
+        <div class="music-info">
+          <span class="music-title">Dandelions — Ruth B.</span>
+          <div class="music-wave" id="musicWave">
+            <span></span><span></span><span></span><span></span><span></span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- background music -->
+    <audio id="bgMusic" preload="auto" loop>
+      <source src="dandelions.mp3" type="audio/mpeg">
+    </audio>
+
+    <!-- slides injected by JS from MEDIA list below -->
+    <div id="slidesContainer"></div>
+
+    <!-- nav arrows -->
+    <button class="arrow left" id="arrowLeft" onclick="prevSlide()">&#8592;</button>
+    <button class="arrow right" id="arrowRight" onclick="nextSlide()">&#8594;</button>
+
+    <!-- progress bar -->
+    <div class="progress-bar-wrap">
+      <div class="progress-bar" id="progressBar"></div>
+    </div>
+
+    <!-- counter + mute toggle -->
+    <div class="slide-controls">
+      <span class="slide-counter" id="slideCounter">1 / 1</span>
+      <button class="vid-mute-btn" id="vidMuteBtn" onclick="toggleVidMute()" title="Toggle video sound">🔇</button>
+    </div>
+
+    <!-- dots -->
+    <div class="slide-dots" id="slideDots"></div>
+
+  </div><!-- /slideshow -->
+</div><!-- /p3 -->
+
+<script>
+/* ══════════════════════════════════
+   FLOATING HEARTS
+══════════════════════════════════ */
+const HB = document.getElementById('heartsBg');
+['❤️','💕','💖','💗','💝','🌸','✨','💞','🌹','🫶'].forEach(e => {
+  for (let i = 0; i < 3; i++) {
+    const h = document.createElement('div');
+    h.className = 'hf'; h.textContent = e;
+    h.style.cssText = `left:${Math.random()*100}vw;font-size:${.7+Math.random()*1.3}rem;animation-duration:${9+Math.random()*13}s;animation-delay:${-Math.random()*22}s`;
+    HB.appendChild(h);
+  }
+});
+
+/* ══════════════════════════════════
+   PAGE TRANSITIONS
+══════════════════════════════════ */
+function showPage(id) {
+  document.querySelectorAll('.page').forEach(p => {
+    p.classList.add('hidden');
+    p.style.zIndex = '';
+  });
+  const target = document.getElementById(id);
+  target.classList.remove('hidden');
+  target.style.zIndex = '40';
+  // if No button is flying and we leave p2, hide it
+  const nb = document.getElementById('btnNo');
+  if (nb && id !== 'p2') nb.style.display = 'none';
+  if (nb && id === 'p2') nb.style.display = '';
+}
+function openEnv() {
+  const e = document.getElementById('envIcon');
+  e.style.transition = 'all .5s';
+  e.style.transform = 'scale(1.4) rotate(-10deg)';
+  e.textContent = '💖';
+  setTimeout(() => showPage('p2'), 650);
+  setTimeout(initMeme, 660);
+}
+
+/* ══════════════════════════════════
+   MEMES — using Tenor embed URLs
+   (more reliable than Giphy direct)
+══════════════════════════════════ */
+const MEMES = [
+  { gif:"https://media1.tenor.com/m/xAt5qkjodi0AAAAd/manchas-dog.gif",
+    txt:"Me watching you try to click 'No' like some kind of villain 👀" },
+  { gif:"https://media.tenor.com/hnH5r-jI1M8AAAAM/pipa-cat-pipa.gif",
+    txt:"Even the Cat is disappointed in you rn. Very disappointed." },
+  { gif:"https://media.tenor.com/rl_da90w6a0AAAAM/%E7%9A%849.gif",
+    txt:"You clicked it AGAIN?? IN THIS ECONOMY?? Absolutely unhinged behaviour." },
+  { gif:"https://media.tenor.com/bstIXhl7aJUAAAAM/excuse-me.gif",
+    txt:"Sir / Ma'am. I am going to need you to RECONSIDER. Immediately." },
+  { gif:"https://media.tenor.com/BBp1msoLeLoAAAAM/dog-side-eye.gif",
+    txt:"The dog is watching. The dog is personally offended on my behalf." },
+  { gif:"https://media.tenor.com/14b3oQe1uw0AAAAM/cat-crying-cat.gif",
+    txt:"I coded this whole thing with LOVE and you're just casually destroying me. Rude." },
+  { gif:"https://media.tenor.com/tcrKUpIJq9kAAAAM/crying-the-office.gif",
+    txt:"I'm not crying. I'm just very, very, VERY disappointed in you. 😔" },
+  { gif:"https://media.tenor.com/TSMSms25puIAAAAM/shrek-gravewalker.gif",
+    txt:"Every time you click 'No', Shrek cries. You're making Shrek cry." },
+  { gif:"https://media.tenor.com/_KH0exdtVxIAAAA1/cat-feeding-time.webp",
+    txt:"Okay FINE. What if I said I'd buy you literally all the food? 🍕🍔🍜" },
+  { gif:"https://media.tenor.com/aZ1C_J3j6o0AAAAM/smile-corner.gif",
+    txt:"I am on the floor. Flat out. Deceased. They tried their best." },
+  { gif:"https://media.tenor.com/4IckGuTqWeYAAAAM/spongebob-squarepants-begging.gif",
+    txt:"I am physically begging. On my knees. In the rain. Dramatically." },
+  { gif:"https://media.tenor.com/YYNfKXMaIsEAAAAM/i%27m-going-home-finna-go-home.gif",
+    txt:"LAST CHANCE. The 'Yes' button is RIGHT THERE. So pretty. Just click it. 🥺" },
+  { gif:"https://media.tenor.com/z_RNHY_SEh0AAAAm/what%27s-up-stickers-tawfikiya.webp",
+    txt:"Fine. Fine! I'll just love you from a distance. Dramatically. In the rain. 💔" },
+  { gif:"https://media.tenor.com/UgF1iSzzT98AAAAM/monkey-laptop.gif",
+    txt:"You know what? You win. I give up. Goodbye cruel world. 🎻" },
+];
+
+let memeReady = false;
+function initMeme() {
+  setMeme(0);
+  memeReady = true;
+}
+function setMeme(idx) {
+  const m = MEMES[Math.min(idx, MEMES.length - 1)];
+  const img = document.getElementById('memeGif');
+  const txt = document.getElementById('memeTxt');
+  img.style.opacity = '0';
+  img.style.transition = 'opacity .25s';
+  setTimeout(() => {
+    img.src = m.gif;
+    txt.textContent = m.txt;
+    img.onload = () => { img.style.opacity = '1'; };
+    // fallback in case onload already fired
+    setTimeout(() => { img.style.opacity = '1'; }, 400);
+  }, 260);
+}
+
+/* ══════════════════════════════════
+   NO BUTTON CHAOS
+══════════════════════════════════ */
+let noCount = 0, noSize = 17;
+const noBtn  = document.getElementById('btnNo');
+const yesBtn = document.getElementById('btnYes');
+const memeBox= document.getElementById('memeBox');
+const p2     = document.getElementById('p2');
+const bigQ   = document.getElementById('bigQ');
+
+const CWORDS = [
+  "WHY 💔","NOOO 😭","bruh…","STOP IT","really??","🚨ALERT🚨","pls…",
+  "I'm dying","my heart…","unacceptable","😤 bold of u","sus move",
+  "RECONSIDER","babe…","🫠 melting","I beg","not today","the audacity",
+  "ma'am.","sir.","come on!!","🥺 please","are u ok?","this is fine 🔥",
+  "my soul left","emotional damage","i can't even","ok ok ok no wait",
+];
+const NO_LABELS = [
+  "No","No…","Still no??","WHY tho","You monster 😭","Seriously??",
+  "STOP IT","Last chance…","I beg u 🥺","…fine 💔","(pls don't)","I give up","...","(gone)"
+];
+
+function positionNo() {
+  if (!noBtn.classList.contains('flying')) return; // only fly after first click
+  const vp   = window.visualViewport;
+  const vw   = vp ? vp.width  : window.innerWidth;
+  const vh   = vp ? vp.height : window.innerHeight;
+  const offX = vp ? vp.offsetLeft : 0;
+  const offY = vp ? vp.offsetTop  : 0;
+  const bw   = noBtn.offsetWidth  || 130;
+  const bh   = noBtn.offsetHeight || 48;
+  const pad  = 18;
+  noBtn.style.left      = offX + pad + Math.random() * (vw - bw - pad * 2) + 'px';
+  noBtn.style.top       = offY + pad + Math.random() * (vh - bh - pad * 2) + 'px';
+  noBtn.style.width     = '';
+  noBtn.style.transform = 'none';
+}
+
+function spawnWord() {
+  const w = document.createElement('div');
+  w.className = 'cw';
+  w.textContent = CWORDS[Math.floor(Math.random() * CWORDS.length)];
+  const cols = ['#e8334a','#f2b05e','#a29bfe','#fd79a8','#00b894','#e17055','#fdcb6e'];
+  w.style.color      = cols[Math.floor(Math.random() * cols.length)];
+  w.style.left       = 4 + Math.random() * 86 + 'vw';
+  w.style.top        = 8 + Math.random() * 76 + 'vh';
+  w.style.fontSize   = (.85 + Math.random() * 1.1) + 'rem';
+  w.style.animationDuration = (.65 + Math.random() * .85) + 's';
+  document.body.appendChild(w);
+  setTimeout(() => w.remove(), 2200);
+}
+
+function triggerShake() {
+  p2.classList.remove('shk-s','shk-m','shk-l');
+  void p2.offsetWidth;
+  if (noCount < 5)       p2.classList.add('shk-s');
+  else if (noCount < 10) p2.classList.add('shk-m');
+  else                   p2.classList.add('shk-l');
+}
+
+function noClicked() {
+  noCount++;
+
+  // On first No — detach button from flow + swap photo for meme
+  if (noCount === 1) {
+    // Grab current position before detaching so it doesn't jump
+    const rect = noBtn.getBoundingClientRect();
+    noBtn.style.left   = rect.left + 'px';
+    noBtn.style.top    = rect.top  + 'px';
+    noBtn.style.width  = rect.width  + 'px';
+    noBtn.classList.add('flying');
+    // Swap intro photo → meme box
+    const photoWrap = document.getElementById('introPhotoWrap');
+    if (photoWrap) {
+      photoWrap.style.transition = 'opacity .35s, transform .35s';
+      photoWrap.style.opacity = '0';
+      photoWrap.style.transform = 'scale(.9)';
+      setTimeout(() => {
+        photoWrap.style.display = 'none';
+        memeBox.style.display = 'flex';
+        memeBox.style.animation = 'fadeUp .4s ease forwards';
+      }, 360);
+    }
+  }
+
+  setMeme(noCount - 1);
+
+  // flash border
+  memeBox.classList.remove('flash');
+  void memeBox.offsetWidth;
+  memeBox.classList.add('flash');
+
+  // chaos words — burst grows with clicks
+  const bursts = Math.min(1 + Math.floor(noCount / 3), 7);
+  for (let i = 0; i < bursts; i++) setTimeout(spawnWord, i * 100);
+
+  // shake
+  triggerShake();
+
+  // rainbow text at 7
+  if (noCount === 7) bigQ.classList.add('rainbow');
+
+  // red tint at 10
+  if (noCount === 10) p2.classList.add('red-tint');
+
+  // shrink no
+  if (noSize > 7) noSize = Math.max(7, noSize - 1.1);
+  noBtn.style.fontSize = noSize + 'px';
+  noBtn.style.padding  = noCount > 6 ? '.4rem .8rem' : '.85rem 2rem';
+
+  // grow yes
+  const ys = parseFloat(window.getComputedStyle(yesBtn).fontSize);
+  if (ys < 32) yesBtn.style.fontSize = (ys + .9) + 'px';
+
+  // rename
+  noBtn.textContent = NO_LABELS[Math.min(noCount, NO_LABELS.length - 1)];
+
+  // fade
+  if (noCount >= 13) noBtn.style.opacity = String(Math.max(.06, 1 - (noCount - 12) * .2));
+  if (noCount >= 18) noBtn.style.display = 'none';
+
+  // teleport
+  setTimeout(positionNo, 60);
+}
+
+// No button only flees on click — no hover escape
+
+// ── Cursor / finger trail — desktop mousemove + mobile touchmove ──
+function spawnTrailAt(x, y) {
+  if (Math.random() > .78) {
+    const h = document.createElement('div');
+    h.className = 'cur';
+    h.textContent = ['💔','😭','🫠','❓','🚫','😤','🥺','😩'][Math.floor(Math.random() * 8)];
+    h.style.cssText = `left:${x - 9}px;top:${y - 9}px`;
+    document.body.appendChild(h);
+    setTimeout(() => h.remove(), 800);
+  }
+}
+const p2el = document.getElementById('p2');
+p2el.addEventListener('mousemove', e => spawnTrailAt(e.clientX, e.clientY));
+p2el.addEventListener('touchmove', e => {
+  const t = e.touches[0];
+  spawnTrailAt(t.clientX, t.clientY);
+}, { passive: true });
+
+/* ══════════════════════════════════
+   YES
+══════════════════════════════════ */
+function sayYes() {
+  launchConfetti();
+  p2.classList.remove('rainbow','red-tint','shk-s','shk-m','shk-l');
+  setTimeout(() => {
+    showPage('p3');
+    startHeartRain();
+    initSlideshow();
+    startMusic();
+  }, 900);
+}
+
+/* ══════════════════════════════════
+   CONFETTI
+══════════════════════════════════ */
+function launchConfetti() {
+  const cols = ['#e8334a','#f2b05e','#ffd6dc','#fff0a0','#a8e6cf','#acd4ff','#fd79a8','#a29bfe'];
+  for (let i = 0; i < 130; i++) {
+    const c = document.createElement('div');
+    c.className = 'cfti';
+    c.style.left              = Math.random() * 100 + 'vw';
+    c.style.background        = cols[Math.floor(Math.random() * cols.length)];
+    c.style.width             = (6 + Math.random() * 10) + 'px';
+    c.style.height            = (6 + Math.random() * 10) + 'px';
+    c.style.borderRadius      = Math.random() > .5 ? '50%' : '2px';
+    c.style.animationDuration = (2 + Math.random() * 3) + 's';
+    c.style.animationDelay    = (Math.random() * 1.5) + 's';
+    document.body.appendChild(c);
+    setTimeout(() => c.remove(), 6000);
+  }
+}
+
+/* ══════════════════════════════════
+   HEART RAIN on p3
+══════════════════════════════════ */
+let heartRainInterval;
+function startHeartRain() {
+  heartRainInterval = setInterval(() => {
+    const h = document.createElement('div');
+    h.className = 'hr';
+    h.textContent = ['❤️','💕','💖','💗','🌸','✨','💞'][Math.floor(Math.random() * 7)];
+    h.style.left              = Math.random() * 100 + 'vw';
+    h.style.top               = '0';
+    h.style.animationDuration = (5 + Math.random() * 6) + 's';
+    h.style.fontSize          = (.8 + Math.random() * .9) + 'rem';
+    document.body.appendChild(h);
+    setTimeout(() => h.remove(), 12000);
+  }, 400);
+}
+
+/* ══════════════════════════════════════════════════════
+   SLIDESHOW  —  supports photos + videos, 20+ items
+   ══════════════════════════════════════════════════════
+
+   HOW TO ADD YOUR PHOTOS & VIDEOS:
+   Edit the MEDIA array below. Each item is an object:
+
+   Photo:  { type:'photo', src:'filename', title:"Caption', sub:"note' }
+   Video:  { type:'video', src:'filename', title:"Caption', sub:"note' }
+
+   ── Supported photo formats ──────────────────────────
+   jpg / jpeg / png / webp / gif / heic / heif / avif
+
+   ── Supported video formats ──────────────────────────
+   mp4 / m4v / mov / webm / 3gp
+   (MOV files from iPhone work fine — browser treats as mp4)
+
+   ── Notes ─────────────────────────────────────────────
+   - Put ALL files in the same folder as this HTML file
+   - title = big caption text on the slide
+   - sub   = smaller subtitle (optional, use '' to leave blank)
+   - Videos play to the end then auto-advance
+   - Photos each show for 5 seconds
+   - Dandelions ducks to low volume during videos,
+     then fades back up on photos automatically 🎵
+   - The final love message slide is added automatically
+   - Add as many items as you want — no limit!
+   ══════════════════════════════════════════════════════ */
+const MEDIA = [
+  { type:"photo", src:"photo1.jpg",  title:"The Beginning 🌸",            sub:"Where it all started…" },
+  { type:"photo", src:"photo2.jpg",  title:"I Cherish every Moment with You",      sub:"Let's do more together…" },
+  { type:"video", src:"video1.mp4",  title:"A Moment I Replay 🎥",        sub:"Over and over again." },
+  { type:"photo", src:"us.jpg",      title:"My Favourite Photo of Us 🥰", sub:"You looked so beautiful here." },
+  { type:"photo", src:"photo4.jpg",  title:"Who is your Best Photographer again?",           sub:"There like madddd. 🤪" },
+  { type:"video", src:"video2.mp4",  title:"Even When I no dey mood",     sub:"I dey for You. Mafo!" },
+  { type:"photo", src:"photo5.jpg",  title:"Just Us 💫",                  sub:"My favourite kind of moment." },
+  { type:"photo", src:"photo6.jpg",  title:"Golden Hour 🌅",              sub:"Everything glows when you're around." },
+  { type:"photo", src:"photo7.jpg",  title:"This Smile 🥺",               sub:"You have no idea what it does to me." },
+  { type:"photo", src:"photo8.jpg",  title:"A Random Tuesday ✨",         sub:"Even ordinary days feel special with you." },
+  { type:"photo", src:"photo9.jpg",  title:"I Love the way You Love me 🥺",  sub:"Te amo mucho, mi corazón. 🥺" },
+  { type:"photo", src:"photo10.jpg",  title:"I will Spoil you with Capri-sonne 😂",  sub:"Just calm down for me" },
+  { type:"photo", src:"photo11.jpg",  title:"What a Photo 💜",  sub:"I want more beautiful photos like this" },
+  { type:"video", src:"video3.mp4",  title:"Us Being Silly 🤪",           sub:"Never a dull moment." },
+  // ── Add as many as you want below this line ──
+  // { type:"photo", src:"photo9.jpg",  title:"...", sub:"..." },
+  // { type:"video", src:"video4.mp4",  title:"...", sub:"..." },
+];
+
+const PHOTO_DURATION = 5000; // ms each photo shows
+let curSlide   = 0;
+let slideTimer = null;
+let progTimer  = null;
+let progStart  = 0;
+let progTotal  = 0;
+let vidMuted   = true;
+let allSlides  = [];
+
+/* ── Format helpers ── */
+// Returns the correct MIME type for video files
+function getVideoMime(src) {
+  const ext = src.split('.').pop().toLowerCase();
+  const map = {
+    'mp4': 'video/mp4',
+    'm4v': 'video/mp4',
+    'mov': 'video/mp4',          // MOV is H.264 in mp4 container — browsers accept video/mp4
+    'webm': 'video/webm',
+    'ogg': 'video/ogg',
+    'ogv': 'video/ogg',
+    '3gp': 'video/3gpp',
+  };
+  return map[ext] || 'video/mp4';
+}
+
+// For MOV files, also provide an mp4 fallback source hint
+function getVideoSources(src) {
+  const ext = src.split('.').pop().toLowerCase();
+  const mime = getVideoMime(src);
+  // For mov, provide both mov and a renamed .mp4 hint so Android can try
+  if (ext === 'mov') {
+    return `<source src="${src}" type="video/mp4">`;
+  }
+  return `<source src="${src}" type="${mime}">`;
+}
+
+// Detect if image is a format that might need special handling
+function isHeic(src) {
+  const ext = src.split('.').pop().toLowerCase();
+  return ext === 'heic' || ext === 'heif';
+}
+
+/* ── Build slides from MEDIA array ── */
+function buildSlides() {
+  const container = document.getElementById('slidesContainer');
+  container.innerHTML = '';
+
+  MEDIA.forEach((m, i) => {
+    const div = document.createElement('div');
+    div.className = 'slide' + (i === 0 ? ' active' : '') + (m.type === 'video' ? ' is-video' : '');
+    div.dataset.index = i;
+    div.dataset.type  = m.type;
+
+    if (m.type === 'photo') {
+      div.innerHTML = `
+        <div class="slide-img-wrap">
+          <img src="${m.src}" alt="memory ${i+1}" loading="lazy">
+        </div>
+        <div class="slide-overlay"></div>
+        <div class="slide-caption">
+          <span class="slide-num">Memory ${String(i+1).padStart(2,'0')}</span>
+          <div class="slide-title">${m.title}</div>
+          ${m.sub ? `<div class="slide-subtitle">${m.sub}</div>` : ''}
+        </div>`;
+    } else {
+      // Build multi-source video for broad format support
+      const videoSources = getVideoSources(m.src);
+      div.innerHTML = `
+        <div class="slide-video-wrap">
+          <video playsinline webkit-playsinline muted
+            preload="metadata" loop="false">${videoSources}</video>
+        </div>
+        <div class="slide-overlay"></div>
+        <div class="slide-caption">
+          <span class="slide-num">Memory ${String(i+1).padStart(2,'0')}</span>
+          <div class="slide-title">${m.title}</div>
+          ${m.sub ? `<div class="slide-subtitle">${m.sub}</div>` : ''}
+        </div>`;
+    }
+    container.appendChild(div);
+  });
+
+  // Final love slide
+  const final = document.createElement('div');
+  final.className = 'slide';
+  final.dataset.index = MEDIA.length;
+  final.dataset.type  = 'final';
+  final.innerHTML = `
+    <div class="slide-img-wrap">
+      <img src="https://images.unsplash.com/photo-1508739773434-c26b3d09e071?w=900&q=80" alt="bg">
+    </div>
+    <div class="slide-overlay" style="background:linear-gradient(to top,rgba(10,2,6,.97) 0%,rgba(10,2,6,.7) 100%)"></div>
+    <div class="love-final">
+      <div class="heart-big">💖</div>
+      <h2>Happy Valentine's Day</h2>
+      <p>From the moment I met you, I knew you were special.<br>
+         Every laugh, every memory, every quiet moment —<br>
+         I want them all with you.</p>
+      <span class="sig">— To Infinity and beyond 💜</span>
+      <a class="btn-wa-final" onclick="openWhatsApp(event)" href="#">
+        <span class="wa-icon">💌</span>
+        <span class="wa-label">Tell me how much you love me</span>
+        <span class="wa-arrow">→</span>
+      </a>
+    </div>`;
+  container.appendChild(final);
+
+  allSlides = Array.from(document.querySelectorAll('.slide'));
+}
+
+/* ── Dots ── */
+function buildDots() {
+  const dotsEl = document.getElementById('slideDots');
+  dotsEl.innerHTML = '';
+  allSlides.forEach((_, i) => {
+    const d = document.createElement('button');
+    d.className = 'dot' + (i === 0 ? ' active' : '');
+    d.onclick = () => goToSlide(i);
+    dotsEl.appendChild(d);
+  });
+}
+
+function updateDots() {
+  document.querySelectorAll('.dot').forEach((d,i) => d.classList.toggle('active', i === curSlide));
+  // scroll active dot into view
+  const activeDot = document.querySelectorAll('.dot')[curSlide];
+  if (activeDot) activeDot.scrollIntoView({inline:'center', block:'nearest', behavior:'smooth'});
+}
+
+/* ── Counter ── */
+function updateCounter() {
+  const el = document.getElementById('slideCounter');
+  if (el) el.textContent = (curSlide + 1) + ' / ' + allSlides.length;
+}
+
+/* ── Progress bar ── */
+function startProgress(duration) {
+  clearInterval(progTimer);
+  const bar = document.getElementById('progressBar');
+  bar.style.transition = 'none';
+  bar.style.width = '0%';
+  progStart = Date.now();
+  progTotal = duration;
+  void bar.offsetWidth;
+  bar.style.transition = `width ${duration}ms linear`;
+  bar.style.width = '100%';
+}
+function resetProgress() {
+  const bar = document.getElementById('progressBar');
+  if (bar) { bar.style.transition = 'none'; bar.style.width = '0%'; }
+  clearInterval(progTimer);
+}
+
+/* ── Music volume ducking ── */
+let _volFader = null;
+const MUSIC_FULL = 0.85;   // normal volume
+const MUSIC_DUCK = 0.15;   // ducked volume during video
+
+function fadeMusicTo(target, durationMs) {
+  if (!bgMusic || bgMusic.paused) return;
+  clearInterval(_volFader);
+  const start   = bgMusic.volume;
+  const diff    = target - start;
+  const steps   = 30;
+  const stepMs  = durationMs / steps;
+  let   step    = 0;
+  _volFader = setInterval(() => {
+    step++;
+    bgMusic.volume = Math.min(1, Math.max(0, start + diff * (step / steps)));
+    if (step >= steps) clearInterval(_volFader);
+  }, stepMs);
+}
+
+/* ── Activate a slide ── */
+function activateSlide(idx, slides) {
+  // Deactivate all — pause all videos
+  slides.forEach(s => {
+    s.classList.remove('active');
+    const v = s.querySelector('video');
+    if (v) { v.pause(); v.currentTime = 0; }
+  });
+
+  const slide = slides[idx];
+  slide.classList.add('active');
+  updateDots();
+  updateCounter();
+  resetProgress();
+
+  const type    = slide.dataset.type;
+  const muteBtn = document.getElementById('vidMuteBtn');
+
+  if (type === 'video') {
+    const vid = slide.querySelector('video');
+    muteBtn && muteBtn.classList.remove('hidden');
+    vid.muted = vidMuted;
+    vid.currentTime = 0;
+    vid.play().catch(() => {});
+    // Duck the background music while video plays
+    fadeMusicTo(MUSIC_DUCK, 800);
+    // Advance when video ends
+    vid.onended = () => {
+      if (curSlide === idx) advanceSlide();
+    };
+    // Progress bar tracks video
+    startProgress((vid.duration || 15) * 1000);
+    vid.addEventListener('loadedmetadata', () => {
+      startProgress(vid.duration * 1000);
+    }, { once: true });
+  } else {
+    // photo or final slide — restore full volume
+    muteBtn && muteBtn.classList.add('hidden');
+    fadeMusicTo(MUSIC_FULL, 1000);
+    const dur = type === 'final' ? 99999999 : PHOTO_DURATION;
+    startProgress(dur);
+    clearTimeout(slideTimer);
+    if (type !== 'final') {
+      slideTimer = setTimeout(advanceSlide, PHOTO_DURATION);
+    }
+  }
+}
+
+function advanceSlide() {
+  if (curSlide < allSlides.length - 1) {
+    curSlide++;
+    activateSlide(curSlide, allSlides);
+  }
+  // stop on final slide
+}
+
+/* ── Nav ── */
+function goToSlide(i) {
+  clearTimeout(slideTimer);
+  curSlide = i;
+  activateSlide(curSlide, allSlides);
+}
+function nextSlide() {
+  clearTimeout(slideTimer);
+  curSlide = (curSlide + 1) % allSlides.length;
+  activateSlide(curSlide, allSlides);
+}
+function prevSlide() {
+  clearTimeout(slideTimer);
+  curSlide = (curSlide - 1 + allSlides.length) % allSlides.length;
+  activateSlide(curSlide, allSlides);
+}
+
+/* ── Video mute toggle ── */
+function toggleVidMute() {
+  vidMuted = !vidMuted;
+  const btn = document.getElementById('vidMuteBtn');
+  btn.textContent = vidMuted ? '🔇' : '🔊';
+  // apply to current video
+  const vid = allSlides[curSlide] && allSlides[curSlide].querySelector('video');
+  if (vid) vid.muted = vidMuted;
+}
+
+/* ── Init ── */
+function initSlideshow() {
+  buildSlides();
+  buildDots();
+  curSlide = 0;
+  activateSlide(0, allSlides);
+}
+
+/* ── Swipe ── */
+let touchStartX = 0, touchStartY = 0;
+document.getElementById('p3').addEventListener('touchstart', e => {
+  touchStartX = e.touches[0].clientX;
+  touchStartY = e.touches[0].clientY;
+}, {passive:true});
+document.getElementById('p3').addEventListener('touchend', e => {
+  const dx = touchStartX - e.changedTouches[0].clientX;
+  const dy = touchStartY - e.changedTouches[0].clientY;
+  if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 40) {
+    dx > 0 ? nextSlide() : prevSlide();
+  }
+}, {passive:true});
+
+/* ── Keyboard ── */
+document.addEventListener('keydown', e => {
+  if (!document.getElementById('p3').classList.contains('hidden')) {
+    if (e.key === 'ArrowRight') nextSlide();
+    if (e.key === 'ArrowLeft')  prevSlide();
+  }
+});
+
+// No button only flees on click — no hover
+
+/* ══════════════════════════════════
+   MUSIC — Dandelions peak at ~1:14
+══════════════════════════════════ */
+const bgMusic   = document.getElementById('bgMusic');
+const musicBtn  = document.getElementById('musicBtn');
+const musicWave = document.getElementById('musicWave');
+// "I think I landed in the right arms" chorus = ~74 seconds in
+const PEAK_START = 74;
+
+function startMusic() {
+  if (!bgMusic) return;
+  bgMusic.currentTime = PEAK_START;
+  bgMusic.volume = 0;
+  bgMusic.loop = true;
+  const playPromise = bgMusic.play();
+  if (playPromise !== undefined) {
+    playPromise.then(() => {
+      // Fade volume in gently over 3 seconds
+      let vol = 0;
+      const fadeIn = setInterval(() => {
+        vol = Math.min(vol + 0.04, MUSIC_FULL);
+        bgMusic.volume = vol;
+        if (vol >= MUSIC_FULL) clearInterval(fadeIn);
+      }, 120);
+    }).catch(() => {
+      // Autoplay blocked — show a tap-to-play hint
+      if (musicBtn) {
+        musicBtn.textContent = '▶';
+        musicBtn.title = 'Tap to play music';
+        musicWave && musicWave.classList.add('paused');
+      }
+    });
+  }
+}
+
+function toggleMusic() {
+  if (!bgMusic) return;
+  if (bgMusic.paused) {
+    // If never started, jump to peak
+    if (bgMusic.currentTime === 0) bgMusic.currentTime = PEAK_START;
+    bgMusic.play();
+    musicBtn.innerHTML = '&#9646;&#9646;';
+    musicWave && musicWave.classList.remove('paused');
+  } else {
+    bgMusic.pause();
+    musicBtn.innerHTML = '&#9654;';
+    musicWave && musicWave.classList.add('paused');
+  }
+}
+
+// Music is tied to p3 only — no override needed
+
+/* ══════════════════════════════════
+   WHATSAPP LINK
+   Replace PHONE_NUMBER below with
+   your WhatsApp number in full
+   international format, no + or spaces
+   e.g. for +234 801 234 5678 → 2348012345678
+══════════════════════════════════ */
+const WA_PHONE   = '2349066820192';
+const WA_MESSAGE = "Yes! I'll be your Valentine!";
+
+function openWhatsApp(e) {
+  e.preventDefault();
+  const encoded = encodeURIComponent(WA_MESSAGE);
+  const url = `https://wa.me/${WA_PHONE}?text=${encoded}`;
+  window.open(url, '_blank');
+}
+
+</script>
+</body>
+</html>
